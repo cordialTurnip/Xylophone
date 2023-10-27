@@ -13,6 +13,7 @@ int bpm = 100;
 int qN = round(60000 / bpm);
 int hN = round (qN * 2);
 //note distances from start
+bool isAtPosition = note == int(stepper.currentPosition());
 
 int note[] = {0,16,32,48,64,80,96};
 int littleStar[] = {note[0],qN,note[0],qN,note[4],qN,note[4],qN,note[5],qN,note[5],qN,note[4],hN,note[3],qN,note[3],qN,note[2],qN,note[2],qN,note[1],qN,note[1],qN,note[0],hN,note[5],qN,note[5],qN,note[3],qN,note[3],qN,note[2],qN,note[2],qN,note[1],hN,note[5],qN,note[5],qN,note[3],qN,note[3],qN,note[2],qN,note[2],qN,note[1],hN};
@@ -24,11 +25,11 @@ MeUltrasonicSensor ultraSensor(PORT_5);
 void tapKey(int note, int noteLength){
   stepper.moveTo(note);
   stepper.run();
-  if (note == int(stepper.currentPosition())){
-  delay(noteLength);
+  if (isAtPosition){
   motor1.run(-100);
   delay(50);
   motor1.run(0);
+  delay(noteLength);
   }
 }
 
